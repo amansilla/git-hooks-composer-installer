@@ -1,0 +1,30 @@
+{
+    "name": "ams/git-hooks-composer-installer",
+    "description": "Help to install git hooks into you repo.",
+    "type": "composer-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Antonio Mansilla",
+            "email": "antonio.mansilla@flagbit.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "composer-plugin-api": "^1.1"
+    },
+    "require-dev": {
+        "composer/composer": "^1.1"
+    },
+    "autoload":{
+        "psr-4":{
+            "Ams\\Composer\\GitHooks\\": "src/"
+        }
+    },
+    "extra": {
+        "class": "Ams\\Composer\\GitHooks\\Plugin"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
