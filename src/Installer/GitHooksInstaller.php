@@ -20,10 +20,7 @@ class GitHooksInstaller extends LibraryInstaller
     }
 
     /**
-     * Installs specific package.
-     *
-     * @param InstalledRepositoryInterface $repo    repository in which to check
-     * @param PackageInterface             $package package instance
+     * {@inheritDoc}
      */
     public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
@@ -43,13 +40,7 @@ class GitHooksInstaller extends LibraryInstaller
     }
 
     /**
-     * Updates specific package.
-     *
-     * @param InstalledRepositoryInterface $repo    repository in which to check
-     * @param PackageInterface             $initial already installed package version
-     * @param PackageInterface             $target  updated version
-     *
-     * @throws InvalidArgumentException if $initial package is not installed
+     * {@inheritDoc}
      */
     public function update(InstalledRepositoryInterface $repo, PackageInterface $initial, PackageInterface $target)
     {
@@ -66,6 +57,19 @@ class GitHooksInstaller extends LibraryInstaller
         $this->filesystem->ensureDirectoryExists($targetPath);
 
         $this->copyGitHooks($originPath, $targetPath, true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
+    {
+        $originPath = realpath($this->getInstallPath($package) . '/hooks');
+        $targetPath = realpath($this->vendorDir . '/../.git/hooks');
+
+        $this->removeGitHooks($originPath, $targetPath);
+
+        parent::uninstall($repo, $package);
     }
 
     private function copyGitHooks($sourcePath, $targetPath, $isUpdate = false)
@@ -97,9 +101,28 @@ class GitHooksInstaller extends LibraryInstaller
                 continue;
             }
 
-            $this->io->write('Installing ' . $githook->getPathname() . ' into ' . $newPath);
+            $this->io->write(sprintf('Installing %s git hook', $githook->getFilename()));
             copy($githook->getPathname(), $newPath);
             Silencer::call('chmod', $newPath, 0777 & ~umask());
+        }
+    }
+
+    private function removeGitHooks($sourcePath, $targetPath)
+    {
+        $i = new \FilesystemIterator($sourcePath);
+
+        foreach ($i as $githook) {
+            // ignore all files not matching a git hook name
+            if (!array_search($githook->getFilename(), GitHooks::$hookFilename)) {
+                $this->io->write(sprintf('Found % not matching any valid git hook name', $githook->getFilename()));
+                continue;
+            }
+
+            $newPath = $targetPath.'/'.$githook->getFilename();
+            if (file_exists($newPath)) {
+                $this->io->write(sprintf('Removing %s git hook', $githook->getFilename()));
+                unlink($newPath);
+            }
         }
     }
 }
