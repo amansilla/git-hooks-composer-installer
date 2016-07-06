@@ -1,5 +1,5 @@
 {
-    "name": "ams/git-hooks-composer-installer",
+    "name": "ams/git-hooks-installer",
     "description": "Help to install git hooks into you repo.",
     "type": "composer-plugin",
     "license": "MIT",
@@ -23,6 +23,9 @@
     },
     "extra": {
         "class": "Ams\\Composer\\GitHooks\\Plugin"
+    },
+    "replace": {
+        "ams/git-hooks-composer-installer": "self.version"
     },
     "config": {
         "sort-packages": true

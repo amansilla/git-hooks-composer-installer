@@ -5,13 +5,13 @@ This plugin helps you automate the installation git hooks using [composer](https
 # Installation
 Just run the following command:
 
-    php composer.phar require --dev ams/git-hooks-composer-installer
+    php composer.phar require --dev ams/git-hooks-installer
 
 or if you prefer add the following to the `composer.json` file:
 
     {
         "require-dev": {
-            "ams/git-hooks-composer-installer": dev-master"
+            "ams/git-hooks-installer": dev-master"
         }
     }
 
