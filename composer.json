@@ -1,6 +1,6 @@
 {
     "name": "ams/git-hooks-installer",
-    "description": "Help to install git hooks into you repo.",
+    "description": "This composer plugin helps you automate the installation git hooks into your project.",
     "homepage": "https://github.com/amansilla/git-hooks-composer-installer",
     "type": "composer-plugin",
     "license": "MIT",
