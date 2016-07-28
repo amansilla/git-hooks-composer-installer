@@ -27,10 +27,11 @@ class GitHooksInstaller extends LibraryInstaller
         parent::install($repo, $package);
 
         $originPath = realpath($this->getInstallPath($package));
-        $this->io->write($originPath);
-
         $targetPath = realpath($this->vendorDir . '/../.git/hooks');
-        $this->io->write($targetPath);
+
+        if ($this->io->isVerbose()) {
+            $this->io->write(sprintf('Installing git hooks from %s into %s', $originPath, $targetPath));
+        }
 
         // throws exception if one of both paths doesn't exists
         $this->filesystem->ensureDirectoryExists($originPath);
@@ -47,10 +48,11 @@ class GitHooksInstaller extends LibraryInstaller
         parent::update($repo, $initial, $target);
 
         $originPath = realpath($this->getInstallPath($initial));
-        $this->io->write($originPath);
-
         $targetPath = realpath($this->vendorDir . '/../.git/hooks');
-        $this->io->write($targetPath);
+
+        if ($this->io->isVerbose()) {
+            $this->io->write(sprintf('Updating git hooks from %s into %s', $originPath, $targetPath));
+        }
 
         // throws exception if one of both paths doesn't exists
         $this->filesystem->ensureDirectoryExists($originPath);
@@ -67,6 +69,10 @@ class GitHooksInstaller extends LibraryInstaller
         $originPath = realpath($this->getInstallPath($package));
         $targetPath = realpath($this->vendorDir . '/../.git/hooks');
 
+        if ($this->io->isVerbose()) {
+            $this->io->write(sprintf('Uninstalling git hooks from %s into %s', $originPath, $targetPath));
+        }
+
         $this->removeGitHooks($originPath, $targetPath);
 
         parent::uninstall($repo, $package);
@@ -79,7 +85,6 @@ class GitHooksInstaller extends LibraryInstaller
         foreach ($i as $githook) {
             // ignore all files not matching a git hook name
             if (!array_search($githook->getFilename(), GitHooks::$hookFilename)) {
-                $this->io->write(sprintf('Found % not matching any valid git hook name', $githook->getFilename()));
                 continue;
             }
 
@@ -87,7 +92,7 @@ class GitHooksInstaller extends LibraryInstaller
 
             // check if .sample version exists in that case rename it
             if (file_exists($newPath . GitHooks::SAMPLE)) {
-                rename($newPath . GitHooks::SAMPLE, $newPath . GitHooks::SAMPLE . 'bk');
+                rename($newPath . GitHooks::SAMPLE, $newPath . GitHooks::SAMPLE . '.bk');
             }
 
             // check if there is already a git hook with same name do nothing
@@ -101,7 +106,7 @@ class GitHooksInstaller extends LibraryInstaller
                 continue;
             }
 
-            $this->io->write(sprintf('Installing %s git hook', $githook->getFilename()));
+            $this->io->write(sprintf('Installing git hook %s', $githook->getFilename()));
             copy($githook->getPathname(), $newPath);
             Silencer::call('chmod', $newPath, 0777 & ~umask());
         }
@@ -114,13 +119,12 @@ class GitHooksInstaller extends LibraryInstaller
         foreach ($i as $githook) {
             // ignore all files not matching a git hook name
             if (!array_search($githook->getFilename(), GitHooks::$hookFilename)) {
-                $this->io->write(sprintf('Found % not matching any valid git hook name', $githook->getFilename()));
                 continue;
             }
 
             $newPath = $targetPath.'/'.$githook->getFilename();
             if (file_exists($newPath)) {
-                $this->io->write(sprintf('Removing %s git hook', $githook->getFilename()));
+                $this->io->write(sprintf('Removing git hook %s', $githook->getFilename()));
                 unlink($newPath);
             }
         }
