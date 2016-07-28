@@ -26,7 +26,7 @@ class GitHooksInstaller extends LibraryInstaller
     {
         parent::install($repo, $package);
 
-        $originPath = realpath($this->getInstallPath($package) . '/hooks');
+        $originPath = realpath($this->getInstallPath($package));
         $this->io->write($originPath);
 
         $targetPath = realpath($this->vendorDir . '/../.git/hooks');
@@ -46,7 +46,7 @@ class GitHooksInstaller extends LibraryInstaller
     {
         parent::update($repo, $initial, $target);
 
-        $originPath = realpath($this->getInstallPath($initial) . '/hooks');
+        $originPath = realpath($this->getInstallPath($initial));
         $this->io->write($originPath);
 
         $targetPath = realpath($this->vendorDir . '/../.git/hooks');
@@ -64,7 +64,7 @@ class GitHooksInstaller extends LibraryInstaller
      */
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
-        $originPath = realpath($this->getInstallPath($package) . '/hooks');
+        $originPath = realpath($this->getInstallPath($package));
         $targetPath = realpath($this->vendorDir . '/../.git/hooks');
 
         $this->removeGitHooks($originPath, $targetPath);
