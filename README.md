@@ -50,3 +50,25 @@ Currently are the following git hooks supported:
 * `post-update`
 * `pre-auto-gc`
 * `post-rewrite`
+
+
+Contribute
+----------
+
+Contributions to are very welcome!
+
+* Report any bugs or issues you find on the [issue tracker].
+
+Support
+-------
+
+If you are having problems, send a mail to contact@amansilla.com or just write me [@flamingek] on Twitter.
+
+License
+-------
+
+All contents of this package are licensed under the [MIT license].
+
+[issue tracker]: https://github.com/amansilla/git-hooks-composer-installer/issues
+[MIT license]: LICENSE
+[@flamingek]: https://twitter.com/flamingek
