@@ -17,6 +17,9 @@ or if you prefer add the following to the `composer.json` file:
     {
         "require-dev": {
             "ams/git-hooks-installer": dev-master"
+        },
+        "extra": {
+            "git-root-dir": "."
         }
     }
 

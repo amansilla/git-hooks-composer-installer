@@ -2,11 +2,12 @@
 
 namespace Ams\Composer\GitHooks\Installer;
 
+use Ams\Composer\GitHooks\Config;
 use Ams\Composer\GitHooks\GitHooks;
 use Ams\Composer\GitHooks\Plugin;
 use Composer\Installer\LibraryInstaller;
-use Composer\Repository\InstalledRepositoryInterface;
 use Composer\Package\PackageInterface;
+use Composer\Repository\InstalledRepositoryInterface;
 use Composer\Util\Silencer;
 
 class GitHooksInstaller extends LibraryInstaller
@@ -26,8 +27,8 @@ class GitHooksInstaller extends LibraryInstaller
     {
         parent::install($repo, $package);
 
-        $originPath = realpath($this->getInstallPath($package));
-        $targetPath = realpath($this->vendorDir . '/../.git/hooks');
+        $originPath = $this->getInstallPath($package);
+        $targetPath = $this->getGitHooksInstallPath();
 
         if ($this->io->isVerbose()) {
             $this->io->write(sprintf('Installing git hooks from %s into %s', $originPath, $targetPath));
@@ -47,8 +48,8 @@ class GitHooksInstaller extends LibraryInstaller
     {
         parent::update($repo, $initial, $target);
 
-        $originPath = realpath($this->getInstallPath($initial));
-        $targetPath = realpath($this->vendorDir . '/../.git/hooks');
+        $originPath = $this->getInstallPath($initial);
+        $targetPath = $this->getGitHooksInstallPath();
 
         if ($this->io->isVerbose()) {
             $this->io->write(sprintf('Updating git hooks from %s into %s', $originPath, $targetPath));
@@ -66,8 +67,8 @@ class GitHooksInstaller extends LibraryInstaller
      */
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
-        $originPath = realpath($this->getInstallPath($package));
-        $targetPath = realpath($this->vendorDir . '/../.git/hooks');
+        $originPath = $this->getInstallPath($package);
+        $targetPath = $this->getGitHooksInstallPath();
 
         if ($this->io->isVerbose()) {
             $this->io->write(sprintf('Uninstalling git hooks from %s into %s', $originPath, $targetPath));
@@ -78,6 +79,11 @@ class GitHooksInstaller extends LibraryInstaller
         parent::uninstall($repo, $package);
     }
 
+    /**
+     * @param string $sourcePath
+     * @param string $targetPath
+     * @param bool   $isUpdate
+     */
     private function copyGitHooks($sourcePath, $targetPath, $isUpdate = false)
     {
         $i = new \FilesystemIterator($sourcePath);
@@ -112,6 +118,10 @@ class GitHooksInstaller extends LibraryInstaller
         }
     }
 
+    /**
+     * @param $sourcePath
+     * @param $targetPath
+     */
     private function removeGitHooks($sourcePath, $targetPath)
     {
         $i = new \FilesystemIterator($sourcePath);
@@ -128,5 +138,18 @@ class GitHooksInstaller extends LibraryInstaller
                 unlink($newPath);
             }
         }
+    }
+
+    /**
+     * Returns the installation path of the Git hooks
+     *
+     * @return string
+     */
+    private function getGitHooksInstallPath()
+    {
+        $config = $this->composer->getPackage()->getExtra();
+        $relPath = array_key_exists(Config::GIT_ROOT_DIR_KEY, $config) ? ('/' . $config[Config::GIT_ROOT_DIR_KEY]) : '';
+
+        return $this->vendorDir . $relPath . '/../.git/hooks';
     }
 }
