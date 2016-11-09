@@ -131,7 +131,7 @@ class GitHooksInstaller extends LibraryInstaller
             }
 
             $this->io->write(sprintf('    Installing git hook %s', $githook->getFilename()));
-            copy($githook->getPathname(), $newPath);
+            $this->filesystem->relativeSymlink($githook->getPathname(), $newPath);
             Silencer::call('chmod', $newPath, 0777 & ~umask());
         }
     }
