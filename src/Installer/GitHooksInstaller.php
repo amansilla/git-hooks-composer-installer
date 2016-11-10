@@ -27,14 +27,20 @@ class GitHooksInstaller extends LibraryInstaller
     {
         parent::install($repo, $package);
 
+        $gitRootPath = realpath($this->getGitRootPath());
+        if (!is_dir($gitRootPath) || !file_exists($gitRootPath)) {
+            $this->io->writeError(sprintf('    Skipped installation of %s: Not a git repository found on "git-root" path %s', $package->getName(), $gitRootPath));
+            return;
+        }
+
         $originPath = $this->getInstallPath($package);
         $targetPath = $this->getGitHooksInstallPath();
 
         if ($this->io->isVerbose()) {
-            $this->io->write(sprintf('Installing git hooks from %s into %s', $originPath, $targetPath));
+            $this->io->write(sprintf('    Installing git hooks from %s into %s', $originPath, $targetPath));
         }
 
-        // throws exception if one of both paths doesn't exists
+        // throws exception if one of both paths doesn't exists or couldn't be created
         $this->filesystem->ensureDirectoryExists($originPath);
         $this->filesystem->ensureDirectoryExists($targetPath);
 
@@ -48,14 +54,20 @@ class GitHooksInstaller extends LibraryInstaller
     {
         parent::update($repo, $initial, $target);
 
+        $gitRootPath = realpath($this->getGitRootPath());
+        if (!is_dir($gitRootPath) || !file_exists($gitRootPath)) {
+            $this->io->writeError(sprintf('    Skipped update of %s: Not a git repository found on "git-root" path %s', $target->getName(), $gitRootPath));
+            return;
+        }
+
         $originPath = $this->getInstallPath($initial);
         $targetPath = $this->getGitHooksInstallPath();
 
         if ($this->io->isVerbose()) {
-            $this->io->write(sprintf('Updating git hooks from %s into %s', $originPath, $targetPath));
+            $this->io->write(sprintf('    Updating git hooks from %s into %s', $originPath, $targetPath));
         }
 
-        // throws exception if one of both paths doesn't exists
+        // throws exception if one of both paths doesn't exists or couldn't be created
         $this->filesystem->ensureDirectoryExists($originPath);
         $this->filesystem->ensureDirectoryExists($targetPath);
 
@@ -67,16 +79,22 @@ class GitHooksInstaller extends LibraryInstaller
      */
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
+        parent::uninstall($repo, $package);
+
+        $gitRootPath = realpath($this->getGitRootPath());
+        if (!is_dir($gitRootPath) || !file_exists($gitRootPath)) {
+            $this->io->writeError(sprintf('    Skipped update of %s: Not a git repository found on "git-root" path %s', $package->getName(), $gitRootPath));
+            return;
+        }
+
         $originPath = $this->getInstallPath($package);
         $targetPath = $this->getGitHooksInstallPath();
 
         if ($this->io->isVerbose()) {
-            $this->io->write(sprintf('Uninstalling git hooks from %s into %s', $originPath, $targetPath));
+            $this->io->write(sprintf('    Uninstalling git hooks from %s into %s', $originPath, $targetPath));
         }
 
         $this->removeGitHooks($originPath, $targetPath);
-
-        parent::uninstall($repo, $package);
     }
 
     /**
@@ -103,7 +121,7 @@ class GitHooksInstaller extends LibraryInstaller
 
             // check if there is already a git hook with same name do nothing
             if (file_exists($newPath) && !$isUpdate) {
-                $this->io->write(sprintf('Found already existing %s git hook. Doing nothing.', $githook->getFilename()));
+                $this->io->write(sprintf('    Found already existing %s git hook. Doing nothing.', $githook->getFilename()));
                 continue;
             }
 
@@ -112,8 +130,8 @@ class GitHooksInstaller extends LibraryInstaller
                 continue;
             }
 
-            $this->io->write(sprintf('Installing git hook %s', $githook->getFilename()));
-            copy($githook->getPathname(), $newPath);
+            $this->io->write(sprintf('    Installing git hook %s', $githook->getFilename()));
+            $this->filesystem->relativeSymlink($githook->getPathname(), $newPath);
             Silencer::call('chmod', $newPath, 0777 & ~umask());
         }
     }
@@ -134,7 +152,7 @@ class GitHooksInstaller extends LibraryInstaller
 
             $newPath = $targetPath.'/'.$githook->getFilename();
             if (file_exists($newPath)) {
-                $this->io->write(sprintf('Removing git hook %s', $githook->getFilename()));
+                $this->io->write(sprintf('   Removing git hook %s', $githook->getFilename()));
                 unlink($newPath);
             }
         }
@@ -147,9 +165,19 @@ class GitHooksInstaller extends LibraryInstaller
      */
     private function getGitHooksInstallPath()
     {
+        return $this->getGitRootPath() . '/hooks';
+    }
+
+    /**
+     * Returns the git root path
+     *
+     * @return string
+     */
+    private function getGitRootPath()
+    {
         $config = $this->composer->getPackage()->getExtra();
         $relPath = array_key_exists(Config::GIT_ROOT_DIR_KEY, $config) ? ('/' . $config[Config::GIT_ROOT_DIR_KEY]) : '';
 
-        return $this->vendorDir . $relPath . '/../.git/hooks';
+        return $this->vendorDir . $relPath . '/../.git';
     }
 }
