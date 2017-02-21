@@ -2,6 +2,7 @@ Git Hooks Composer Installer
 ===========================
 [![Latest Stable Version](https://poser.pugx.org/ams/git-hooks-installer/v/stable)](https://packagist.org/packages/ams/git-hooks-installer)
 [![Total Downloads](https://poser.pugx.org/ams/git-hooks-installer/downloads)](https://packagist.org/packages/ams/git-hooks-installer)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/amansilla/git-hooks-composer-installer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/amansilla/git-hooks-composer-installer/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/c1015283-d2e4-49b6-8094-b3187873e50e/mini.png)](https://insight.sensiolabs.com/projects/c1015283-d2e4-49b6-8094-b3187873e50e)
 [![License](https://poser.pugx.org/ams/git-hooks-installer/license)](https://packagist.org/packages/ams/git-hooks-installer)
 
