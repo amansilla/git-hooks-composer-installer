@@ -112,7 +112,7 @@ class GitHooksInstaller extends LibraryInstaller
                 continue;
             }
 
-            $newPath = $targetPath.'/'.$githook->getFilename();
+            $newPath = $targetPath . '/' . $githook->getFilename();
 
             // check if .sample version exists in that case rename it
             if (file_exists($newPath . GitHooks::SAMPLE)) {
@@ -150,7 +150,7 @@ class GitHooksInstaller extends LibraryInstaller
                 continue;
             }
 
-            $newPath = $targetPath.'/'.$githook->getFilename();
+            $newPath = $targetPath . '/' . $githook->getFilename();
             if (file_exists($newPath)) {
                 $this->io->write(sprintf('   Removing git hook %s', $githook->getFilename()));
                 unlink($newPath);
