@@ -16,11 +16,17 @@
         "composer-plugin-api": "^1.1"
     },
     "require-dev": {
-        "composer/composer": "^1.1"
+        "composer/composer": "^1.1",
+        "phpunit/phpunit": "^4.5 || ^5.0.5"
     },
     "autoload":{
         "psr-4":{
             "Ams\\Composer\\GitHooks\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ams\\Composer\\GitHooks\\Test\\": "tests/"
         }
     },
     "extra": {
