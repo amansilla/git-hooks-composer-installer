@@ -6,7 +6,7 @@ class GitHooks
 {
     const SAMPLE = '.sample';
 
-    static $hookFilename = [
+    public static $hookFilename = [
         'applypatch-msg',
         'pre-applypatch',
         'post-applypatch',

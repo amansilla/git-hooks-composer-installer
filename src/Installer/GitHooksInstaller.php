@@ -137,8 +137,8 @@ class GitHooksInstaller extends LibraryInstaller
     }
 
     /**
-     * @param $sourcePath
-     * @param $targetPath
+     * @param string $sourcePath
+     * @param string $targetPath
      */
     private function removeGitHooks($sourcePath, $targetPath)
     {
