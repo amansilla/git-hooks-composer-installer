@@ -1,6 +1,7 @@
 Git Hooks Composer Installer
 ===========================
 [![Build Status](https://travis-ci.org/amansilla/git-hooks-composer-installer.svg?branch=master)](https://travis-ci.org/amansilla/git-hooks-composer-installer)
+[![Build status](https://ci.appveyor.com/api/projects/status/j8x3uj96yeajf7qj/branch/master?svg=true)](https://ci.appveyor.com/project/amansilla/git-hooks-composer-installer/branch/master)
 [![Latest Stable Version](https://poser.pugx.org/ams/git-hooks-installer/v/stable)](https://packagist.org/packages/ams/git-hooks-installer)
 [![Total Downloads](https://poser.pugx.org/ams/git-hooks-installer/downloads)](https://packagist.org/packages/ams/git-hooks-installer)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/amansilla/git-hooks-composer-installer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/amansilla/git-hooks-composer-installer/?branch=master)

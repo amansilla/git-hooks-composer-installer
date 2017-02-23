@@ -1,0 +1,34 @@
+build: false
+platform:
+  - x86
+  - x64
+clone_folder: c:\projects\git-hooks-composer-installer
+
+cache:
+  - c:\tools\php71 -> appveyor.yml
+
+init:
+  - SET PATH=c:\Program Files\OpenSSL;c:\tools\php71;%PATH%
+  - SET COMPOSER_NO_INTERACTION=1
+  - SET PHP=1
+
+install:
+  - ps: Set-Service wuauserv -StartupType Manual
+  - IF EXIST c:\tools\php71 (SET PHP=0) ELSE (mkdir c:\tools\php71)
+  - IF %PHP%==1 cinst -y OpenSSL.Light
+  - IF %PHP%==1 cinst -y php
+  - cd c:\tools\php71
+  - IF %PHP%==1 copy php.ini-development php.ini /Y
+  - IF %PHP%==1 echo date.timezone="UTC" >> php.ini
+  - IF %PHP%==1 echo extension_dir=ext >> php.ini
+  - IF %PHP%==1 echo extension=php_openssl.dll >> php.ini
+  - IF %PHP%==1 echo extension=php_mbstring.dll >> php.ini
+  - IF %PHP%==1 echo extension=php_fileinfo.dll >> php.ini
+  - IF %PHP%==1 echo @php %%~dp0composer.phar %%* > composer.bat
+  - appveyor DownloadFile https://getcomposer.org/composer.phar
+  - cd c:\projects\git-hooks-composer-installer
+  - composer install --prefer-source --no-progress
+
+test_script:
+  - cd c:\projects\git-hooks-composer-installer
+  - vendor/bin/phpunit --colors=always
