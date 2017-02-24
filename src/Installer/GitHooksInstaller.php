@@ -17,7 +17,7 @@ class GitHooksInstaller extends LibraryInstaller
      */
     public function supports($packageType)
     {
-        return $packageType == Plugin::PACKAGE_TYPE;
+        return $packageType === Plugin::PACKAGE_TYPE;
     }
 
     /**
