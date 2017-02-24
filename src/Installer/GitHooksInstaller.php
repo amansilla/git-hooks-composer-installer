@@ -29,7 +29,12 @@ class GitHooksInstaller extends LibraryInstaller
 
         $gitRootPath = realpath($this->getGitRootPath());
         if (!is_dir($gitRootPath)) {
-            $this->io->writeError(sprintf('    Skipped installation of %s: Not a git repository found on "git-root" path %s', $package->getName(), $gitRootPath));
+            $this->io->writeError(sprintf(
+                '    <warning>Skipped installation of %s: Not a git repository found on "git-root" path %s</warning>',
+                $package->getName(),
+                $gitRootPath
+            ));
+
             return;
         }
 
@@ -56,7 +61,12 @@ class GitHooksInstaller extends LibraryInstaller
 
         $gitRootPath = realpath($this->getGitRootPath());
         if (!is_dir($gitRootPath)) {
-            $this->io->writeError(sprintf('    Skipped update of %s: Not a git repository found on "git-root" path %s', $target->getName(), $gitRootPath));
+            $this->io->writeError(sprintf(
+                '    <warning>Skipped update of %s: Not a git repository found on "git-root" path %s</warning>',
+                $target->getName(),
+                $gitRootPath
+            ));
+
             return;
         }
 
@@ -83,7 +93,12 @@ class GitHooksInstaller extends LibraryInstaller
 
         $gitRootPath = realpath($this->getGitRootPath());
         if (!is_dir($gitRootPath)) {
-            $this->io->writeError(sprintf('    Skipped update of %s: Not a git repository found on "git-root" path %s', $package->getName(), $gitRootPath));
+            $this->io->writeError(sprintf(
+                '    <warning>Skipped update of %s: Not a git repository found on "git-root" path %s</warning>',
+                $package->getName(),
+                $gitRootPath
+            ));
+
             return;
         }
 
