@@ -49,7 +49,7 @@ class GitHooksInstaller extends LibraryInstaller
         $this->filesystem->ensureDirectoryExists($originPath);
         $this->filesystem->ensureDirectoryExists($targetPath);
 
-        $this->copyGitHooks($originPath, $targetPath);
+        $this->installGitHooks($originPath, $targetPath);
     }
 
     /**
@@ -81,7 +81,7 @@ class GitHooksInstaller extends LibraryInstaller
         $this->filesystem->ensureDirectoryExists($originPath);
         $this->filesystem->ensureDirectoryExists($targetPath);
 
-        $this->copyGitHooks($originPath, $targetPath, true);
+        $this->installGitHooks($originPath, $targetPath, true);
     }
 
     /**
@@ -117,7 +117,7 @@ class GitHooksInstaller extends LibraryInstaller
      * @param string $targetPath
      * @param bool   $isUpdate
      */
-    private function copyGitHooks($sourcePath, $targetPath, $isUpdate = false)
+    private function installGitHooks($sourcePath, $targetPath, $isUpdate = false)
     {
         $i = new \FilesystemIterator($sourcePath);
 
