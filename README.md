@@ -16,13 +16,13 @@ Installation
 ------------
 Just run the following command:
 
-    php composer.phar require --dev ams/git-hooks-installer
+    php composer.phar require --dev ams/git-hooks-installer:@alpha
 
 or if you prefer add the following to the `composer.json` file:
 
     {
         "require-dev": {
-            "ams/git-hooks-installer": dev-master"
+            "ams/git-hooks-installer": "@alpha"
         },
         "extra": {
             "git-root-dir": "."
