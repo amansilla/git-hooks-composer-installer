@@ -89,8 +89,6 @@ class GitHooksInstaller extends LibraryInstaller
      */
     public function uninstall(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
-        parent::uninstall($repo, $package);
-
         $gitRootPath = $this->getGitRootPath();
         if (!is_dir($gitRootPath)) {
             $this->io->writeError(sprintf(
@@ -110,6 +108,8 @@ class GitHooksInstaller extends LibraryInstaller
         }
 
         $this->removeGitHooks($originPath, $targetPath);
+
+        parent::uninstall($repo, $package);
     }
 
     /**
