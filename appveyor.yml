@@ -5,19 +5,19 @@ platform:
 clone_folder: c:\projects\git-hooks-composer-installer
 
 cache:
-  - c:\tools\php71 -> appveyor.yml
+  - c:\tools\php72 -> appveyor.yml
 
 init:
-  - SET PATH=c:\Program Files\OpenSSL;c:\tools\php71;%PATH%
+  - SET PATH=c:\Program Files\OpenSSL;c:\tools\php72;%PATH%
   - SET COMPOSER_NO_INTERACTION=1
   - SET PHP=1
 
 install:
   - ps: Set-Service wuauserv -StartupType Manual
-  - IF EXIST c:\tools\php71 (SET PHP=0) ELSE (mkdir c:\tools\php71)
+  - IF EXIST c:\tools\php72 (SET PHP=0) ELSE (mkdir c:\tools\php72)
   - IF %PHP%==1 cinst -y OpenSSL.Light
   - IF %PHP%==1 cinst -y php
-  - cd c:\tools\php71
+  - cd c:\tools\php72
   - IF %PHP%==1 copy php.ini-development php.ini /Y
   - IF %PHP%==1 echo date.timezone="UTC" >> php.ini
   - IF %PHP%==1 echo extension_dir=ext >> php.ini
