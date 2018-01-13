@@ -8,7 +8,7 @@ Git Hooks Composer Installer
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/c1015283-d2e4-49b6-8094-b3187873e50e/mini.png)](https://insight.sensiolabs.com/projects/c1015283-d2e4-49b6-8094-b3187873e50e)
 [![License](https://poser.pugx.org/ams/git-hooks-installer/license)](https://packagist.org/packages/ams/git-hooks-installer)
 
-Latest release: [1.0.0-alpha3](https://packagist.org/packages/ams/git-hooks-installer#1.0.0-alpha3)
+Latest release: [1.0.0-alpha4](https://packagist.org/packages/ams/git-hooks-installer#1.0.0-alpha4)
 
 This plugin helps you automate the installation git hooks using [composer](https://github.com/composer/composer).
 
