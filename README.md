@@ -8,21 +8,21 @@ Git Hooks Composer Installer
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/c1015283-d2e4-49b6-8094-b3187873e50e/mini.png)](https://insight.sensiolabs.com/projects/c1015283-d2e4-49b6-8094-b3187873e50e)
 [![License](https://poser.pugx.org/ams/git-hooks-installer/license)](https://packagist.org/packages/ams/git-hooks-installer)
 
-Latest release: [1.0.0-alpha4](https://packagist.org/packages/ams/git-hooks-installer#1.0.0-alpha4)
+Latest release: [1.0.0](https://packagist.org/packages/ams/git-hooks-installer#1.0.0)
 
-This plugin helps you automate the installation git hooks using [composer](https://github.com/composer/composer).
+This plugin helps you automate the installation git hooks using [composer](https://getcomposer.org/).
 
 Installation
 ------------
 Just run the following command:
 
-    php composer.phar require --dev ams/git-hooks-installer:@alpha
+    $ composer require --dev ams/git-hooks-installer
 
 or if you prefer add the following to the `composer.json` file:
 
     {
         "require-dev": {
-            "ams/git-hooks-installer": "@alpha"
+            "ams/git-hooks-installer": "^1.0"
         },
         "extra": {
             "git-root-dir": "."
@@ -56,7 +56,7 @@ Currently are the following git hooks supported:
 * `pre-push`
 * `pre-auto-gc`
 * `post-rewrite`
-
+You can find any additional information about the git hooks on the [git documentation] online.
 
 Contribute
 ----------
@@ -78,3 +78,4 @@ All contents of this package are licensed under the [MIT license].
 [issue tracker]: https://github.com/amansilla/git-hooks-composer-installer/issues
 [MIT license]: LICENSE
 [@flamingek]: https://twitter.com/flamingek
+[git documentation]: https://git-scm.com/docs/githooks
