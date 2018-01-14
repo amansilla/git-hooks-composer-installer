@@ -54,10 +54,6 @@ Currently are the following git hooks supported:
 * `post-checkout`
 * `post-merge`
 * `pre-push`
-* `pre-receive`
-* `update`
-* `post-receive`
-* `post-update`
 * `pre-auto-gc`
 * `post-rewrite`
 
