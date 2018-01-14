@@ -56,6 +56,7 @@ Currently are the following git hooks supported:
 * `pre-push`
 * `pre-auto-gc`
 * `post-rewrite`
+
 You can find any additional information about the git hooks on the [git documentation] online.
 
 Contribute
