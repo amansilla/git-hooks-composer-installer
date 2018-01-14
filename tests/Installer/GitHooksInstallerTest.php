@@ -20,7 +20,7 @@ class GitHooksInstallerTest extends TestCase
     {
         $this->composer = new Composer();
         $this->composer->setConfig(new Config());
-        $this->io = $this->getMock('Composer\IO\IOInterface');
+        $this->io = $this->getMockBuilder('Composer\IO\IOInterface')->getMock();
     }
 
     public function testSupportSuccess()

@@ -22,7 +22,7 @@ class PluginTest extends TestCase
         $this->composer = new Composer();
         $this->composer->setConfig(new Config());
         $this->composer->setInstallationManager(new InstallationManager());
-        $this->io = $this->getMock('Composer\IO\IOInterface');
+        $this->io = $this->getMockBuilder('Composer\IO\IOInterface')->getMock();
     }
 
     public function testActivateSuccess()
