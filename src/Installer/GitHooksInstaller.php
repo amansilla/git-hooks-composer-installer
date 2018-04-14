@@ -129,11 +129,6 @@ class GitHooksInstaller extends LibraryInstaller
 
             $newPath = $targetPath . '/' . $githook->getFilename();
 
-            // check if .sample version exists in that case rename it
-            if (file_exists($newPath . GitHooks::SAMPLE)) {
-                rename($newPath . GitHooks::SAMPLE, $newPath . GitHooks::SAMPLE . '.bk');
-            }
-
             // check if there is already a git hook with same name do nothing
             if (file_exists($newPath) && !$isUpdate) {
                 $this->io->write(sprintf('    Found already existing %s git hook. Doing nothing.', $githook->getFilename()));
